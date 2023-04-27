@@ -3,7 +3,7 @@ import yaml
 from conftest import data
 
 
-def test_step1(make_folders, clear_folders, make_files, create_file_txt):
+def test_step1(make_folders, clear_folders, make_files, create_file_txt, write_stat_file):
     # create arch and ls-check that arc created
     res1 = checkout_positive("cd {}; 7z a {}/arx1.7z".format(data['folder_in'], data['folder_out']),
                              "Everything is Ok"), "Test1 Fail"
@@ -11,7 +11,7 @@ def test_step1(make_folders, clear_folders, make_files, create_file_txt):
     assert res1 and res2, "Test Fail"
 
 
-def test_step2(clear_folders, make_files, create_file_txt):
+def test_step2(clear_folders, make_files, create_file_txt, write_stat_file):
     # extract files from arc, where -o, yes -y
     res = []
     res.append(
@@ -24,19 +24,19 @@ def test_step2(clear_folders, make_files, create_file_txt):
 
 
 #
-def test_step3(create_file_txt):
+def test_step3(create_file_txt, write_stat_file):
     # test arch
     assert checkout_positive("cd {}; 7z t {}/arx1.7z".format(data['folder_in'], data['folder_out']),
                              "Everything is Ok"), "Test1 Fail"
 
 
-def test_step4(make_folders, clear_folders, make_files, create_file_txt):
+def test_step4(make_folders, clear_folders, make_files, create_file_txt, write_stat_file):
     # update arc
     assert checkout_positive("cd {}; 7z u {}/arx1.7z".format(data['folder_in'], data['folder_out']),
                              "Everything is Ok"), "Test1 Fail"
 
 
-def test_step5(clear_folders, make_files, create_file_txt):
+def test_step5(clear_folders, make_files, create_file_txt, write_stat_file):
     # what arch contain
     res = []
     res.append(
@@ -46,7 +46,7 @@ def test_step5(clear_folders, make_files, create_file_txt):
     assert all(res)
 
 
-def test_step6(make_folders, clear_folders, make_files, make_subfolder, create_file_txt):
+def test_step6(make_folders, clear_folders, make_files, make_subfolder, create_file_txt, write_stat_file):
     # extract files full path
     res = []
     res.append(
@@ -63,11 +63,11 @@ def test_step6(make_folders, clear_folders, make_files, make_subfolder, create_f
 
 
 #
-def test_step7(create_file_txt):
+def test_step7(create_file_txt, write_stat_file):
     # remove arch contains
     assert checkout_positive("7z d {}/arx1.7z".format(data['folder_out']), "Everything is Ok"), "Test7 Fail"
 
 
-def test_step10(create_file_txt):
+def test_step10(create_file_txt, write_stat_file):
     # type of arch
     assert checkout_positive("7z t {}/{}".format(data['folder_out'], data['name_of_arch']), "Everything is Ok"), "Test10 Fail"
